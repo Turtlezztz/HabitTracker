@@ -5,7 +5,7 @@ import {Button} from "@/components/ui/button";
 export default function NavBar() {
 
     const navigateHome = () => {
-        window.location.href="/home";
+        window.location.href="/";
     }
 
     const loggedIn = false
