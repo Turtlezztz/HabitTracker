@@ -1,35 +1,39 @@
-'use client'
-import {Button} from "@/components/ui/button";
+'use server'
+
+import {auth0} from "@/lib/auth0";
+import LoginButton from "@/components/ui/LoginButton";
+import SignUpButton from "@/components/ui/SignUpButton";
+import SignOutButton from "@/components/ui/SignOutButton";
 
 
-export default function NavBar() {
+export default async function NavBar() {
+    const session = await auth0.getSession();
 
-    const navigateHome = () => {
-        window.location.href="/";
-    }
-    const redirectApplication = () => {
-        window.location.href = "application"
-    }
-
-    const loggedIn = false
-
-    if (loggedIn) {
+    if (!session) {
         return (
-            <div>
-
-            </div>
-        )
-    }
-
-    return (
             <>
                 <div className="w-screen h-16 bg-secondary flex justify-between items-center p-5">
-                    <h1 className="text-3xl font-bold text-primary text-lef hover:cursor-pointer" onClick={navigateHome}>Habit tracker</h1>
+                    <h1 className="text-3xl font-bold text-primary text-lef hover:cursor-pointer"
+                        >Habit tracker</h1>
                     <div>
-                        <button className="mr-5 text-gray-500 hover:text-black transition">Sign up</button>
-                        <Button onClick={redirectApplication}>Login</Button>
+                        <SignUpButton/>
+                        <LoginButton/>
                     </div>
                 </div>
             </>
         )
+    }
+
+    return (
+        <>
+            <div className="w-screen h-16 bg-secondary flex justify-between items-center p-5">
+                <h1 className="text-3xl font-bold text-primary text-lef hover:cursor-pointer"
+                    >Habit tracker</h1>
+                <div>
+                    <SignOutButton/>
+                </div>
+            </div>
+        </>
+    )
+
 }
